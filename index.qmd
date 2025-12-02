@@ -1,0 +1,17 @@
+---
+title: "fourwing saltbush"
+format:
+  html:
+    theme:
+      light: simplex
+      dark: darkly
+    toc: false
+---
+
+---
+
+Quiet infrastructure for shared work.
+
+email: [aheller\@mailbox.org](mailto:aheller@mailbox.org)
+
+[download contact card](contact.vcf)
