@@ -10,7 +10,7 @@ format:
 
 ------------------------------------------------------------------------
 
-<img src="/images/rubberrabbit.jpg"
+<img src="/images/rubberrabbit.JPG"
      alt="This is actually rubber rabbitbrush"
       title="This is actually rubber rabbitbrush"
      style="float:left; width:200px; margin:0em 1em 1em 0em;">
