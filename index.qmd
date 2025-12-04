@@ -10,7 +10,7 @@ format:
 
 ------------------------------------------------------------------------
 
-![](images/rubberrabbit.jpg){.float-left width=300px}
+![](images/rubberrabbit.JPG){.float-left width=300px}
 
 This is Adrienne's personal page with contact information, a contact card, and some favorite shrubs.
 
