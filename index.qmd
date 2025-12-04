@@ -8,10 +8,12 @@ format:
     toc: false
 ---
 
----
+------------------------------------------------------------------------
 
-Quiet infrastructure for shared work.
+![](images/rubberrabbit.jpg){.float-left width=300px}
 
-email: [aheller\@mailbox.org](mailto:aheller@mailbox.org)
+This is Adrienne's personal page with contact information, a contact card, and some favorite shrubs.
+
+email: [aheller\@fourwing.net](mailto:aheller@fourwing.net)
 
 [download contact card](contact.vcf)
