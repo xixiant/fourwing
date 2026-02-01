@@ -16,8 +16,7 @@
 
   <script>
     const today = new Date().getDay();     // 0=Sun ... 6=Sat
-    const releaseDays = [1, 3, 5];         // Mon/Wed/Fri
-    // For testing only, temporarily use: const releaseDays = [0, 1, 3, 5];
+    const releaseDays = [0, 1, 3, 5];         // Mon/Wed/Fri (and Sunday for testing)
 
     if (!releaseDays.includes(today)) {
       // intentionally blank on non-release days
