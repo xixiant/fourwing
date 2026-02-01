@@ -1,44 +1,43 @@
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>xkcd (release days only)</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>xkcd</title>
   <style>
-    body {
-      margin: 0;
-      background: transparent;
-      font-family: system-ui, -apple-system, sans-serif;
-      text-align: center;
-    }
-    img {
-      max-width: 100%;
-      height: auto;
-    }
-    .alt {
-      margin-top: 0.5rem;
-      font-size: 0.85rem;
-      opacity: 0.8;
-    }
+    body { margin: 0; background: transparent; font-family: system-ui, -apple-system, sans-serif; text-align: center; }
+    img { max-width: 100%; height: auto; }
+    .alt { margin-top: .5rem; font-size: .85rem; opacity: .8; }
+    .err { font-size: .85rem; opacity: .9; padding: .5rem; white-space: pre-wrap; }
   </style>
 </head>
 <body>
   <div id="comic"></div>
 
   <script>
-    const today = new Date().getDay(); 
-    // 1 = Monday, 3 = Wednesday, 5 = Friday
-    const releaseDays = [0, 1, 3, 5];
+    const today = new Date().getDay();     // 0=Sun ... 6=Sat
+    const releaseDays = [1, 3, 5];         // Mon/Wed/Fri
+    // For testing only, temporarily use: const releaseDays = [0, 1, 3, 5];
 
-    if (releaseDays.includes(today)) {
-      fetch("https://cors.now.sh/https://xkcd.com/info.0.json")
-        .then(r => r.json())
+    if (!releaseDays.includes(today)) {
+      // intentionally blank on non-release days
+    } else {
+      fetch("./xkcd-latest.json", { cache: "no-store" })
+        .then(r => {
+          if (!r.ok) throw new Error(`HTTP ${r.status}`);
+          return r.json();
+        })
         .then(data => {
           document.getElementById("comic").innerHTML = `
             <img src="${data.img}" alt="${data.alt}">
             <div class="alt">${data.alt}</div>
           `;
+        })
+        .catch(err => {
+          document.getElementById("comic").innerHTML =
+            `<div class="err">Couldn’t load xkcd-latest.json:\n${err}</div>`;
         });
     }
-    // else: intentionally do nothing
   </script>
 </body>
 </html>
