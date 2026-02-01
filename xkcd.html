@@ -29,7 +29,7 @@
     const releaseDays = [0, 1, 3, 5];
 
     if (releaseDays.includes(today)) {
-      fetch("https://xkcd.com/info.0.json")
+      fetch("https://cors.now.sh/https://xkcd.com/info.0.json")
         .then(r => r.json())
         .then(data => {
           document.getElementById("comic").innerHTML = `
