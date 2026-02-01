@@ -5,36 +5,59 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>xkcd</title>
   <style>
-    body { margin: 0; background: transparent; font-family: system-ui, -apple-system, sans-serif; text-align: center; }
+    body {
+      margin: 0;
+      background: rgba(255,255,255,0.85); /* TEMP: force visibility */
+      font-family: system-ui, -apple-system, sans-serif;
+      text-align: center;
+    }
     img { max-width: 100%; height: auto; }
-    .alt { margin-top: .5rem; font-size: .85rem; opacity: .8; }
-    .err { font-size: .85rem; opacity: .9; padding: .5rem; white-space: pre-wrap; }
+    .alt { margin: .5rem 1rem; font-size: .9rem; opacity: .85; }
+    .status { padding: .75rem 1rem; font-size: .95rem; }
+    .err { white-space: pre-wrap; padding: .75rem 1rem; font-size: .9rem; }
   </style>
 </head>
 <body>
+  <div id="status" class="status">Loaded HTML. Starting JS…</div>
   <div id="comic"></div>
+  <div id="err" class="err"></div>
 
   <script>
-    const today = new Date().getDay();     // 0=Sun ... 6=Sat
-    const releaseDays = [0, 1, 3, 5];         // Mon/Wed/Fri (and Sunday for testing)
+    const statusEl = document.getElementById("status");
+    const comicEl = document.getElementById("comic");
+    const errEl = document.getElementById("err");
+
+    const dayNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    const today = new Date().getDay(); // 0..6
+    const releaseDays = [0, 1, 3, 5];  // TEMP: include Sunday for testing
+
+    statusEl.textContent = `JS running. Today: ${dayNames[today]} (${today}). releaseDays=${JSON.stringify(releaseDays)}`;
 
     if (!releaseDays.includes(today)) {
-      // intentionally blank on non-release days
+      statusEl.textContent += " — Not a show day; intentionally not fetching.";
     } else {
-      fetch("./xkcd-latest.json", { cache: "no-store" })
+      const url = "/xkcd-latest.json"; // absolute path avoids relative-path surprises
+      statusEl.textContent += ` — Fetching ${url} …`;
+
+      fetch(url, { cache: "no-store" })
         .then(r => {
+          statusEl.textContent += ` HTTP ${r.status}.`;
           if (!r.ok) throw new Error(`HTTP ${r.status}`);
           return r.json();
         })
         .then(data => {
-          document.getElementById("comic").innerHTML = `
+          statusEl.textContent += ` Got comic #${data.num}. Rendering…`;
+          comicEl.innerHTML = `
+            <div><strong>${data.title}</strong></div>
             <img src="${data.img}" alt="${data.alt}">
             <div class="alt">${data.alt}</div>
           `;
+          statusEl.textContent += " Done.";
         })
         .catch(err => {
-          document.getElementById("comic").innerHTML =
-            `<div class="err">Couldn’t load xkcd-latest.json:\n${err}</div>`;
+          statusEl.textContent += " Failed.";
+          errEl.textContent = "Error:\n" + String(err);
+          console.error(err);
         });
     }
   </script>
