@@ -17,4 +17,4 @@ format:
 
 This is Adrienne Heller's personal page. Please find my contact card below.
 
-[download contact card](contact.vcf)
+
