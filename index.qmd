@@ -2,19 +2,50 @@
 title: "fourwing saltbush"
 format:
   html:
-    theme:
-      light: simplex
-      dark: darkly
+    theme: darkly
     toc: false
+    css: style.css
 ---
 
-------------------------------------------------------------------------
+<div class="hero">
+  <img src="images/rubberrabbit.JPG" alt="rubber rabbitbrush" title="rubber rabbitbrush">
+  <div class="hero-title">fourwing saltbush</div>
+</div>
 
-<img src="/images/rubberrabbit.JPG"
-     alt="This is actually rubber rabbitbrush"
-      title="This is actually rubber rabbitbrush"
-     style="float:left; width:200px; margin:0em 1em 1em 0em;">
+```{r}
+#| echo: false
+library(tibble)
+library(purrr)
+library(htmltools)
 
-This is Adrienne Heller's personal page. Please find my contact card below.
+links <- tribble(
+  ~name,                            ~url,                                  ~logo,                                               ~fill,
+  "Poetry Foundation",              "https://www.poetryfoundation.org/",   "images/poetry-foundation-logo-horiz-1024x275.jpeg", FALSE,
+  "DABE",                           "https://www.dabedenver.org/",         "images/dabe.jpg",                                   TRUE,
+  "Electronic Frontier Foundation", "https://www.eff.org/",                "images/eff.svg",                                    FALSE,
+  "The Overhead Wire",              "https://theoverheadwire.com/",        "images/overhead-wire.svg",                          FALSE,
+  "Volts",                          "https://www.volts.wtf/",              "images/volts.png",                                  TRUE,
+  "Transportation for America",     "https://t4america.org/",              "images/t4a.png",                                    TRUE
+)
 
+cards <- map(seq_len(nrow(links)), function(i) {
+  logo_class <- paste("link-logo", if (links$fill[i]) "link-logo-fill" else "")
+  tags$div(
+    class = "card h-100",
+    tags$a(
+      href  = links$url[i],
+      class = "card-body d-flex align-items-center justify-content-center text-decoration-none",
+      style = "background-color: #fff;",
+      tags$img(
+        src   = links$logo[i],
+        alt   = links$name[i],
+        class = logo_class
+      )
+    )
+  )
+})
 
+tagList(
+  tags$div(class = "link-grid", cards)
+)
+```
